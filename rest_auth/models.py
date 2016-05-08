@@ -16,6 +16,7 @@ class MyManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email,
                          **extra_fields)
+        user.email = email
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -45,6 +46,6 @@ class MyUser(AbstractBaseUser):
     USERNAME_FIELD = 'username'
 
     #date_of_birth = models.DateField()
-    height = models.FloatField()
+    name = models.CharField(max_length=150)
 
-    REQUIRED_FIELDS = ['height','email']
+    REQUIRED_FIELDS = ['email']

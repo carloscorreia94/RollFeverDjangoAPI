@@ -6,18 +6,15 @@ class SignUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyUser
         #fields = ('id', 'username', 'password', 'email', 'first_name', 'last_name')
-        fields = ('id', 'username', 'password', 'height')
-        write_only_fields = ('password', 'height')
+        fields = ('id', 'username', 'password', 'name', 'email')
+        #write_only_fields = ('password', 'height')
         read_only_fields = ('id',)
 
     def create(self, validated_data):
         user = MyUser.objects.create(
-            username=validated_data['username'], height='33'
+            username=validated_data['username'], name=validated_data['name']
         )
-        user.height = validated_data['height']
-        #user.email = validated_data['email']
-        #user.first_name = validated_data['first_name']
-        #user.last_name = validated_data['last_name']
+        user.email = validated_data['email']
         user.set_password(validated_data['password'])
         user.save()
 
