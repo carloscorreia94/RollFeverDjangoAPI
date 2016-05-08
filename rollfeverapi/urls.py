@@ -23,3 +23,5 @@ urlpatterns = [
     url(r'^', include('spots.urls')),
     url(r'^', include('rest_auth.urls')),
 ]
+
+#admin.autodiscover()

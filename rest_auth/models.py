@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils.translation import gettext as _
 from django.utils import timezone
 
@@ -29,7 +29,7 @@ class MyManager(BaseUserManager):
         return self._create_user(email, password, True, True,
                                  **extra_fields)
 
-class MyUser(AbstractBaseUser):
+class MyUser(AbstractBaseUser,PermissionsMixin):
     objects = MyManager()
 
     username = models.CharField(max_length=40, unique=True)
@@ -44,8 +44,9 @@ class MyUser(AbstractBaseUser):
 
 
     USERNAME_FIELD = 'username'
-
-    #date_of_birth = models.DateField()
     name = models.CharField(max_length=150)
 
     REQUIRED_FIELDS = ['email']
+
+    def get_short_name(self):
+        return self.username
