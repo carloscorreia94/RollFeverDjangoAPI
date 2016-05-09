@@ -9,5 +9,9 @@ class Spot(models.Model):
     description = models.TextField(blank=True, default='')
     lat = models.DecimalField(max_digits=10, decimal_places=8, null=True)
     lng = models.DecimalField(max_digits=11, decimal_places=8, null=True)
-    #created_by = models.ForeignKey('user')
+    created_by = models.ForeignKey('rest_auth.MyUser', on_delete=models.SET_NULL,null=True)
     #main_pic = models.ImageField()
+
+    def __str__(self):
+        return self.name
+

@@ -6,7 +6,6 @@ from django.contrib.auth.models import Group
 #from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import gettext as _
 from .models import MyUser
-from .forms import CustomUserChangeForm, CustomUserCreationForm
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
@@ -16,7 +15,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ('email', )
+        fields = ('username', 'email', )
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -44,7 +43,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ('email', 'password', 'is_active', 'is_staff')
+        fields = ('username','email', 'password', 'is_active', 'is_staff')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -61,10 +60,10 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'is_staff')
+    list_display = ('username','email', 'is_staff')
     list_filter = ('is_staff',)
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('username', 'email', 'password')}),
        # ('Personal info', {'fields': ('date_of_birth',)}),
         ('Permissions', {'fields': ('is_staff',)}),
     )
@@ -73,7 +72,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2')}
+            'fields': ('username', 'email', 'password1', 'password2')}
         ),
     )
     search_fields = ('email',)
