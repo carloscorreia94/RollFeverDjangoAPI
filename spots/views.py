@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 from rest_framework import permissions
+from rollfeverapi.common import validation_utils
+from rollfeverapi.common.validation_messages import message_missing_input_params
 
 # Create your views here.
 
@@ -24,3 +26,18 @@ class SpotList(APIView):
             serializer.save(created_by=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class SpotsNearby(APIView):
+    permission_classes = [permissions.IsAuthenticated, TokenHasScope]
+    required_scopes = ['spot_guy']
+
+    def get(self, request):
+        params = request.query_params
+        user_lat = params.get('lat', None)
+        user_lng = params.get('lng', None)
+        args = ('lat', 'lng')
+        if not validation_utils.check_args(params,args):
+            return Response(validation_utils.output_error(message_missing_input_params), status=status.HTTP_400_BAD_REQUEST)
+
+        dicti = {'latitude': user_lat, 'longitude': user_lng}
+        return Response(dicti)
