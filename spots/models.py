@@ -1,5 +1,6 @@
 from django.db import models
 from rest_framework.validators import UniqueValidator
+from django.core import serializers
 
 # Create your models here.
 
@@ -14,4 +15,9 @@ class Spot(models.Model):
 
     def __str__(self):
         return self.name
-
+    @staticmethod
+    def nearby(lat,lng,radius):
+        lname = 'Praca da Figueira'
+        test = Spot.objects.raw('SELECT * FROM spots_spot WHERE name = %s', [lname])
+        test = serializers.serialize('json', test, fields=('id','name','lat','lng'))
+        return {'latitude':lat,'longitude':lng,'radius':radius,'test':test}
