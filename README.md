@@ -11,6 +11,18 @@ Roll Fever API
 * Start Spot Info/Resources Core Logic
 * Start Session Info/Resources Core Logic
 
+## Python ToStudy
+
+* Namespaces
+
+## Django ToStudy
+
+* Url Patterns
+
+## Django-Rest ToStudy
+
+* Routers
+
 ## MAIN IDEAS:
 
 * Sessions - Game of Skates , another shit...
