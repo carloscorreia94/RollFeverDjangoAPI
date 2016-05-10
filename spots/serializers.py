@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Spot, Session
+from .models import Spot
 from rest_framework.validators import UniqueValidator
 from django.db.models import CharField
 
@@ -16,12 +16,3 @@ class SpotNearbySerializer(serializers.ModelSerializer):
     class Meta:
         model = Spot
         fields = ('name','created_by','description','lat','lng')
-
-
-class SessionSerializer(serializers.ModelSerializer):
-    created_by = serializers.ReadOnlyField(source='created_by.username')
-    spot = serializers.ReadOnlyField(source='spot.name')
-
-    class Meta:
-        model = Session
-        fields = ('title','start_time','end_time','created_by','spot')

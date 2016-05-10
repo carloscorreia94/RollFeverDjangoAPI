@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
-from .models import Spot,Session
-from .serializers import SpotSerializer, SessionSerializer
+from .models import Spot
+from .serializers import SpotSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
@@ -47,24 +47,4 @@ class SpotsNearby(APIView):
         if not validation_geo.check_coordinates(user_lat,user_lng):
             return Response(validation_utils.output_error(validation_messages.invalid_input_params), status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(geo_utils.nearby(user_lGat,user_lng,user_radius))
-
-class SessionList(APIView):
-
-    # No Permissions for now, just testing
-    def get(self, request, spot):
-        if Spot.objects.filter(id = spot).exists():
-            spotSessions = Session.objects.filter(spot__id = spot)
-            serializer = SessionSerializer(spotSessions)
-            return Response(serializer.data)
-        return Response(validation_utils.output_error(validation_messages.invalid_input_params), status=status.HTTP_400_BAD_REQUEST)
-
-    def post(self, request, spot):
-        if Spot.objects.filter(id = spot).exists():
-            serializer = SessionSerializer(data=request.data)
-            if serializer.is_valid():
-                # TODO : Do this with an exception
-                serializer.save(created_by=self.request.user, spot=Spot.objects.get(id=spot))
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response(validation_utils.output_error(validation_messages.invalid_input_params), status=status.HTTP_400_BAD_REQUEST)
+        return Response(geo_utils.nearby(user_lat,user_lng,user_radius))
