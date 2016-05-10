@@ -7,6 +7,7 @@ from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasS
 from rest_framework import permissions
 from rollfeverapi.common import validation_utils, validation_geo
 from rollfeverapi.common import validation_messages
+from spots.logic import geo_utils
 
 # Create your views here.
 
@@ -45,4 +46,4 @@ class SpotsNearby(APIView):
         if not validation_geo.check_coordinates(user_lat,user_lng):
             return Response(validation_utils.output_error(validation_messages.invalid_input_params), status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(Spot.nearby(user_lat,user_lng,user_radius))
+        return Response(geo_utils.nearby(user_lat,user_lng,user_radius))

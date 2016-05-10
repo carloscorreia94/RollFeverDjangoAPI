@@ -9,3 +9,8 @@ class SpotSerializer(serializers.ModelSerializer):
     class Meta:
         model = Spot
         fields = ('name', 'description', 'created_at', 'lat', 'lng', 'created_by')
+
+class NearbySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Spot
+        fields = ('name','created_by','description','lat','lng')
