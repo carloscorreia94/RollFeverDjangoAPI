@@ -3,10 +3,10 @@ Roll Fever API
 
 ## Todo Crucial:
 
-* Start Sessions Core Logic
-* START TESTS
+* Start Sessions Core Logic [x]
+* START TESTS [x]
 * Start Instagram Integration
-* Start Spot Media Core Logic
+* Start Spot Media Core Logic [x]
 * Start Session Media Core Logic
 * Start Spot Info/Resources Core Logic
 * Start Session Info/Resources Core Logic
@@ -27,6 +27,7 @@ Roll Fever API
 
 * Sessions - Game of Skates , another shit...
 * Groups of People, who discovered/created content , not only one
+* Playlists - Spotify Integration 
 
 ## QUESTIONS:
 

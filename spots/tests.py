@@ -37,7 +37,7 @@ class SpotRestTest(APITestCase):
         return "Bearer {0}".format(token)
 
     def setUp(self):
-        self.user = MyUser.objects.create(username='test_pilot',email='test@pilot.com',is_active=1,is_superuser=1)
+        self.user = MyUser.objects.create(username='test_pilot',email='test@pilot.com')
 
         self.application = Application(
             name="Test Application",
@@ -54,8 +54,9 @@ class SpotRestTest(APITestCase):
                                          application=self.application,
                                          expires=timezone.now()+datetime.timedelta(days=1),
                                          scope='spot_guy')
-
-        self.token = SpotRestTest.__create_authorization_header(token.token)
+        token = SpotRestTest.__create_authorization_header(token.token)
+        self.client = APIClient()
+        self.client.credentials(HTTP_AUTHORIZATION=token)
 
     def tearDown(self):
         self.application.delete()
@@ -65,5 +66,5 @@ class SpotRestTest(APITestCase):
 
         url = reverse('spot-list')
         data = {'name':'Test New Spot'}
-        response = self.client.post(url, data, format='json',HTTP_AUTHORIZATION=self.token)
+        response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
