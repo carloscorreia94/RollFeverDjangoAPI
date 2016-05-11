@@ -4,6 +4,6 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^spots/$', views.SpotList.as_view()),
+    url(r'^spots/$', views.SpotList.as_view(), name='spot-list'),
     url(r'^spots/nearby/$', views.SpotsNearby.as_view()),
 ]

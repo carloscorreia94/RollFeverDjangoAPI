@@ -1,5 +1,4 @@
 from math import radians, degrees, cos
-from spots.serializers import SpotNearbySerializer
 from spots.models import Spot
 
 
@@ -30,5 +29,4 @@ def nearby(lat,lng,radius):
         ) As FirstCut \
         Where acos(sin(%s)*sin(radians(lat)) + cos(%s)*cos(radians(lat))*cos(radians(lng)-%s)) * %s < %s \
         Order by D', [lat,lat,lng,EARTH_RADIUS,minLat,maxLat,minLng,maxLng,lat,lat,lng,EARTH_RADIUS,radius])
-    serializer = SpotNearbySerializer(rawSet,many=True)
-    return serializer.data
+    return rawSet
