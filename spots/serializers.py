@@ -8,7 +8,10 @@ class SpotSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Spot
-        fields = ('name', 'description', 'created_at', 'lat', 'lng', 'created_by')
+        fields = ('name', 'description', 'created_at', 'lat', 'lng', 'created_by','main_pic')
+
+        readonly_fields = ('main_pic')
+
 
 
 # Consider deleting this Serializer?

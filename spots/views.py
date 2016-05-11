@@ -27,7 +27,8 @@ class SpotList(APIView):
         if serializer.is_valid():
             serializer.save(created_by=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        #TODO - Slugs instead of messages in validation
+        return Response(validation_utils.output_error(validation_messages.invalid_input_params,serializer.errors), status=status.HTTP_400_BAD_REQUEST)
 
 
 class SpotsNearby(APIView):
