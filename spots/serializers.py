@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Spot
+from .models import Spot, Thermometer
 from rest_framework.validators import UniqueValidator
 from django.db.models import CharField
 
@@ -16,9 +16,16 @@ class SpotDetailSerializer(serializers.ModelSerializer):
     #TODO : Work on here
     created_by = serializers.ReadOnlyField(source='created_by.username')
 
+    meter = serializers.SerializerMethodField('get_overall_meter')
+
+    def get_overall_meter(self,spot):
+        thermo = Thermometer.objects.get(spot=spot)
+        average = (thermo.people + thermo.flatground + thermo.reputation) / 3
+        return round(average,1)
+
     class Meta:
         model = Spot
-        fields = ('id','name', 'description', 'lat', 'lng', 'created_by','main_pic')
+        fields = ('id','name', 'description', 'lat', 'lng', 'created_by','main_pic','meter')
 
         readonly_fields = ('main_pic')
 
