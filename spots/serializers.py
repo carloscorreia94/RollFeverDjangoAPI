@@ -13,7 +13,6 @@ class SpotSerializer(serializers.ModelSerializer):
         readonly_fields = ('main_pic')
 
 class SpotDetailSerializer(serializers.ModelSerializer):
-    #TODO : Work on here
     created_by = serializers.ReadOnlyField(source='created_by.username')
 
     meter = serializers.SerializerMethodField('get_overall_meter')
