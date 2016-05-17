@@ -4,7 +4,7 @@ from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasS
 from rest_framework import permissions
 from spots.serializers import SpotSerializer
 from spots.models import Spot
-from .models import Favorites
+from .models import Favorites, FollowerRelation
 from rollfeverapi.common import validation_utils, validation_geo, output_messages
 from rollfeverapi.common import validation_messages
 from rollfeverapi.common.output_messages import OutResponse
@@ -14,6 +14,44 @@ from rest_framework import status
 from rest_auth.models import MyUser
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import api_view
+
+class FollowManagement(APIView):
+    permission_classes = [permissions.IsAuthenticated, TokenHasScope]
+    required_scopes = ['spot_guy']
+
+    def post(self, request, username):
+
+        try:
+            inUser = request.user
+            otherUser = MyUser.objects.get(username=username)
+
+            if inUser.username == username:
+                return OutResponse.invalid_arguments()
+
+        except ObjectDoesNotExist:
+            return OutResponse.invalid_arguments()
+
+        same_follow_relation = FollowerRelation.objects.filter(user_created=inUser, user_following=otherUser)
+        if same_follow_relation.exists():
+            return OutResponse.entry_already_exists()
+
+        _status = FollowerRelation.do_follow(inUser,otherUser)
+
+        return OutResponse.content_created(_status)
+
+    def delete(self, request, username):
+
+        try:
+            inUser = request.user
+            otherUser = MyUser.objects.get(username=username)
+        except ObjectDoesNotExist:
+            return OutResponse.invalid_arguments()
+
+        _status = FollowerRelation.do_unfollow(inUser,otherUser)
+        if not _status:
+            return OutResponse.entry_not_existent()
+
+        return OutResponse.action_performed(_status)
 
 
 # Create your views here.
