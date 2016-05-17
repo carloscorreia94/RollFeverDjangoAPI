@@ -2,7 +2,6 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 from rest_framework import permissions
-from spots.serializers import SpotSerializer
 from spots.models import Spot
 from .models import Favorites, FollowerRelation
 from rollfeverapi.common import validation_utils, validation_geo, output_messages
@@ -14,11 +13,10 @@ from rest_framework import status
 from rest_auth.models import MyUser
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import api_view
+from rollfeverapi.common.views import GenericView
 
 
-class Followers(APIView):
-    permission_classes = [permissions.IsAuthenticated, TokenHasScope]
-    required_scopes = ['spot_guy']
+class Followers(GenericView):
 
     def get(self, request, username=None, following=False):
 
@@ -38,16 +36,12 @@ class Followers(APIView):
         return OutResponse.content_set(ret)
 
 
-class Following(APIView):
-    permission_classes = [permissions.IsAuthenticated, TokenHasScope]
-    required_scopes = ['spot_guy']
+class Following(GenericView):
 
     def get(self, request, username=None):
         return Followers.get(Followers.as_view(),request,username,True)
 
-class FollowManagement(APIView):
-    permission_classes = [permissions.IsAuthenticated, TokenHasScope]
-    required_scopes = ['spot_guy']
+class FollowManagement(GenericView):
 
     def post(self, request, username):
 
@@ -85,9 +79,7 @@ class FollowManagement(APIView):
 
 
 # Create your views here.
-class UserFavorites(APIView):
-    permission_classes = [permissions.IsAuthenticated, TokenHasScope]
-    required_scopes = ['spot_guy']
+class UserFavorites(GenericView):
 
     def get(self, request,spot = None, username = None):
         if spot is not None:
@@ -98,10 +90,12 @@ class UserFavorites(APIView):
         except ObjectDoesNotExist:
             return OutResponse.invalid_arguments()
 
-        favorites = Favorites.objects.filter(user=inUser).values_list('spot_id')
-        spots = Spot.objects.filter(id__in = favorites)
-        serializer = SpotSerializer(spots, many=True)
-        return Response(validation_utils.output_success(validation_messages.type_field_set,serializer.data))
+        ret = Favorites.get_spot(inUser)
+
+        if len(ret) == 0:
+            return OutResponse.empty_set()
+
+        return OutResponse.content_set(ret)
 
     def delete(self, request,spot, username = None):
         if username is not None:
@@ -113,14 +107,12 @@ class UserFavorites(APIView):
         except ObjectDoesNotExist:
             return OutResponse.invalid_arguments()
 
-        same_favorite = Favorites.objects.filter(user=inUser, spot=inSpot)
-
-        if not same_favorite.exists():
+        _status = Favorites.delete_favorite(inUser,inSpot)
+        if not _status:
             return OutResponse.entry_not_existent()
 
-        same_favorite.delete()
-
         return OutResponse.content_deleted()
+
 
     def post(self, request,spot, username =None):
         if username is not None:
@@ -132,13 +124,8 @@ class UserFavorites(APIView):
         except ObjectDoesNotExist:
             return OutResponse.invalid_arguments()
 
-        same_favorite = Favorites.objects.filter(user=inUser, spot=inSpot)
-        if same_favorite.exists():
+        create = Favorites.create_favorite(inUser,inSpot)
+        if not create:
             return OutResponse.entry_already_exists()
 
-        favorite = Favorites()
-        favorite.user = inUser
-        favorite.spot = inSpot
-        favorite.save()
-
-        return OutResponse.content_created({'favorite_id': favorite.id})
+        return OutResponse.content_created(create)

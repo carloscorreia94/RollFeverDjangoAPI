@@ -2,18 +2,54 @@ from django.db import models
 from spots.models import Spot
 from rest_auth.models import MyUser
 from .serializers import UserHeadingSerializer
+from spots.serializers import SpotSerializer
+
+"""
+DISCLAIMER:
+Arguments are already VERIFIED IN ALL CASES by the views
+"""
+
 
 class Favorites(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey('rest_auth.MyUser', on_delete=models.CASCADE)
     spot = models.ForeignKey(Spot,on_delete=models.CASCADE)
 
+    @staticmethod
+    def get_spot(in_user):
+        favorites = Favorites.objects.filter(user=in_user).values_list('spot_id')
+        spots = Spot.objects.filter(id__in = favorites)
+        serializer = SpotSerializer(spots, many=True)
+        return serializer.data
+
+    @staticmethod
+    def delete_favorite(in_user, in_spot):
+        same_favorite = Favorites.objects.filter(user=in_user, spot=in_spot)
+
+        if not same_favorite.exists():
+            return False
+
+        same_favorite.delete()
+        return True
+
+    @staticmethod
+    def create_favorite(in_user, in_spot):
+        same_favorite = Favorites.objects.filter(user=in_user, spot=in_spot)
+        if same_favorite.exists():
+            return False
+
+        favorite = Favorites()
+        favorite.user = in_user
+        favorite.spot = in_spot
+        favorite.save()
+
+        return {'favorite_id': favorite.id}
+
+
 class FollowerRelation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user_created = models.ForeignKey('rest_auth.MyUser', on_delete=models.CASCADE, related_name='follower')
     user_following = models.ForeignKey('rest_auth.MyUser', on_delete=models.CASCADE, related_name='following')
-
-    #Arguments are already VERIFIED IN ALL CASES by the views
 
     @staticmethod
     def do_follow(in_user,other_user):
