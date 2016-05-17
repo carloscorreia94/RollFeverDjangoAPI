@@ -15,6 +15,36 @@ from rest_auth.models import MyUser
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import api_view
 
+
+class Followers(APIView):
+    permission_classes = [permissions.IsAuthenticated, TokenHasScope]
+    required_scopes = ['spot_guy']
+
+    def get(self, request, username=None, following=False):
+
+        try:
+            inUser = request.user if username is None else MyUser.objects.get(username=username)
+        except ObjectDoesNotExist:
+            return OutResponse.invalid_arguments()
+
+        if following:
+            ret = FollowerRelation.get_following(inUser)
+        else:
+            ret = FollowerRelation.get_follows(inUser)
+
+        if len(ret) == 0:
+            return OutResponse.empty_set()
+
+        return OutResponse.content_set(ret)
+
+
+class Following(APIView):
+    permission_classes = [permissions.IsAuthenticated, TokenHasScope]
+    required_scopes = ['spot_guy']
+
+    def get(self, request, username=None):
+        return Followers.get(Followers.as_view(),request,username,True)
+
 class FollowManagement(APIView):
     permission_classes = [permissions.IsAuthenticated, TokenHasScope]
     required_scopes = ['spot_guy']

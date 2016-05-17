@@ -36,5 +36,13 @@ class OutResponse:
         return OutResponse.output('action_performed',status.HTTP_200_OK,data)
 
     @classmethod
+    def empty_set(cls, data=None):
+        return OutResponse.output('empty_set',status.HTTP_200_OK,data)
+
+    @classmethod
+    def content_set(cls, data=None):
+        return OutResponse.output('content_set',status.HTTP_200_OK,data)
+
+    @classmethod
     def content_deleted(cls):
         return OutResponse.output(None,status.HTTP_204_NO_CONTENT)
