@@ -11,5 +11,8 @@ urlpatterns = [
     url(r'^user/follow/(?P<username>\w+)/$', views.FollowManagement.as_view()),
     url(r'^user/followers/((?P<username>\w+)/)?$', views.Followers.as_view()),
     url(r'^user/following/((?P<username>\w+)/)?$', views.Following.as_view()),
+
+    url(r'^user/profile/((?P<username>\w+)/)?$', views.UserProfile.as_view()),
+
 ]
 

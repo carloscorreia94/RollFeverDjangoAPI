@@ -129,3 +129,13 @@ class UserFavorites(GenericView):
             return OutResponse.entry_already_exists()
 
         return OutResponse.content_created(create)
+
+class UserProfile(GenericView):
+
+    def get(self,request, username = None):
+        #cenas
+        print('a')
+
+    def put(self, request, username = None):
+        if username is not None:
+            return OutResponse.page_not_found()

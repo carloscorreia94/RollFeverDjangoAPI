@@ -3,6 +3,10 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.utils.translation import gettext as _
 from django.utils import timezone
 
+class Profile(models.Model):
+    name = models.CharField(max_length=150)
+    account = models.ForeignKey('rest_auth.MyUser', on_delete=models.SET_NULL,null=True)
+
 class MyManager(BaseUserManager):
 
     def _create_user(self, email, password,
@@ -44,8 +48,6 @@ class MyUser(AbstractBaseUser,PermissionsMixin):
 
 
     USERNAME_FIELD = 'username'
-    name = models.CharField(max_length=150)
-
     REQUIRED_FIELDS = ['email']
 
     def get_short_name(self):
