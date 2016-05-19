@@ -1,16 +1,18 @@
 from rest_framework import serializers
-from rest_auth.models import MyUser
+from rest_auth.models import MyUser, Profile
+from rest_auth.serializers import UserProfileSerializer
 
 
 class UserHeadingSerializer(serializers.ModelSerializer):
-    test = serializers.SerializerMethodField('test_user')
+    profile = serializers.SerializerMethodField('profile_heading')
 
-    def test_user(self,user):
-        return 'um TeStE!!?'
-        #thermo = Thermometer.objects.get(spot=spot)
-        #average = (thermo.people + thermo.flatground + thermo.reputation) / 3
-        #return round(average,1)
+    def profile_heading(self,user):
+        profile = Profile.objects.get(account=user)
+        return {
+            'name' : profile.name,
+            'user_photo' : str(profile.user_photo)
+        }
 
     class Meta:
         model = MyUser
-        fields = ('username','name', 'test')
+        fields = ('username','profile',)

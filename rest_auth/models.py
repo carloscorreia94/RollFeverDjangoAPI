@@ -2,10 +2,16 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils.translation import gettext as _
 from django.utils import timezone
+from rollfeverapi.common import upload_utils
+
 
 class Profile(models.Model):
     name = models.CharField(max_length=150)
-    account = models.ForeignKey('rest_auth.MyUser', on_delete=models.SET_NULL,null=True)
+    home_location = models.CharField(max_length=150,null=True)
+    birthday = models.DateField(null=True)
+    account = models.OneToOneField('rest_auth.MyUser', on_delete=models.SET_NULL,null=True)
+    user_photo = models.ImageField(upload_to=upload_utils.PathAndRename('users/profile_pics/'), null=True)
+
 
 class MyManager(BaseUserManager):
 

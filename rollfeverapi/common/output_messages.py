@@ -32,6 +32,10 @@ class OutResponse:
         return OutResponse.output('content_created',status.HTTP_201_CREATED,data)
 
     @classmethod
+    def content_updated(cls, data=None):
+        return OutResponse.output('content_updated',status.HTTP_200_OK,data)
+
+    @classmethod
     def action_performed(cls, data=None):
         return OutResponse.output('action_performed',status.HTTP_200_OK,data)
 

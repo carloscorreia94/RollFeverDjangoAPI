@@ -14,6 +14,8 @@ from rest_auth.models import MyUser
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import api_view
 from rollfeverapi.common.views import GenericView
+from rest_auth.serializers import UserProfileSerializer
+from rest_auth.models import Profile
 
 
 class Followers(GenericView):
@@ -139,3 +141,11 @@ class UserProfile(GenericView):
     def put(self, request, username = None):
         if username is not None:
             return OutResponse.page_not_found()
+
+        profile = Profile.objects.get(account=self.request.user)
+
+        serializer = UserProfileSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return OutResponse.content_updated()
+        return Response(validation_utils.output_error(validation_messages.invalid_input_params,serializer.errors), status=status.HTTP_400_BAD_REQUEST)

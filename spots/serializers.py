@@ -26,8 +26,6 @@ class SpotDetailSerializer(serializers.ModelSerializer):
         model = Spot
         fields = ('id','name', 'description', 'lat', 'lng', 'created_by','main_pic','meter')
 
-        readonly_fields = ('main_pic')
-
 
 # Consider deleting this Serializer?
 class SpotNearbySerializer(serializers.ModelSerializer):

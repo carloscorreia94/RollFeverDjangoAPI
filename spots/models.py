@@ -16,7 +16,7 @@ class Spot(models.Model):
     created_by = models.ForeignKey('rest_auth.MyUser', on_delete=models.SET_NULL,null=True)
 
     # TODO : Take care of max size (width,height) here - vs client side
-    main_pic = models.ImageField(upload_to=upload_utils.PathAndRename('rollfeverapi/static/uploads/spots/main_pics/'), null=True)
+    main_pic = models.ImageField(upload_to=upload_utils.PathAndRename('spots/main_pics/'), null=True)
 
     def __str__(self):
         return self.name
