@@ -3,8 +3,8 @@ Roll Fever API
 
 ## Todo Crucial:
 
-* Start Sessions Core Logic [x]
-* START TESTS [x]
+* Finish Response Details, extra params, SEARCH with no PARAMS
+* CONTINUE TESTS [x]
 * Start Instagram Integration
 * Start Spot Media Core Logic [x]
 * Start Session Media Core Logic
