@@ -16,7 +16,9 @@ from rest_framework.decorators import api_view
 from rollfeverapi.common.views import GenericView
 from rest_auth.serializers import UserProfileSerializer
 from rest_auth.models import Profile
-
+from rollfeverapi.common.search_utils import user_search
+import base64
+import binascii
 
 class Followers(GenericView):
 
@@ -135,7 +137,7 @@ class UserFavorites(GenericView):
 class UserProfile(GenericView):
 
     def get(self,request, username = None):
-        #cenas
+        #TODO: This!!!
         print('a')
 
     def put(self, request, username = None):
@@ -149,3 +151,21 @@ class UserProfile(GenericView):
             serializer.save()
             return OutResponse.content_updated()
         return Response(validation_utils.output_error(validation_messages.invalid_input_params,serializer.errors), status=status.HTTP_400_BAD_REQUEST)
+
+class UserSearch(GenericView):
+
+    def get(self, request, base64string):
+        if base64string is None:
+            #TODO: Get queryParams - do something without search
+            decoded = None
+        else:
+            try:
+                decoded = base64.b64decode(base64string).decode('utf-8')
+            except binascii.Error:
+                return OutResponse.invalid_arguments()
+
+        search_results = user_search(decoded)
+        if len(search_results) == 0:
+            return OutResponse.empty_set()
+
+        return OutResponse.content_set(search_results)
