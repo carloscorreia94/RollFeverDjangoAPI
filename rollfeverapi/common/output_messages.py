@@ -20,6 +20,14 @@ class OutResponse:
         return OutResponse.output('invalid_arguments',status.HTTP_400_BAD_REQUEST,data)
 
     @classmethod
+    def invalid_input_params(cls, data=None):
+        return OutResponse.output('invalid_input_params',status.HTTP_400_BAD_REQUEST,data)
+
+    @classmethod
+    def missing_input_params(cls, data=None):
+        return OutResponse.output('missing_input_params',status.HTTP_400_BAD_REQUEST,data)
+
+    @classmethod
     def page_not_found(cls, data=None):
         return OutResponse.output('page_not_found',status.HTTP_404_NOT_FOUND,data)
 
