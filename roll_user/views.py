@@ -19,6 +19,8 @@ from rest_auth.models import Profile
 from rollfeverapi.common.search_utils import user_search
 import base64
 import binascii
+from .serializers import UserHeadingSerializer
+
 
 class Followers(GenericView):
 
@@ -137,8 +139,14 @@ class UserFavorites(GenericView):
 class UserProfile(GenericView):
 
     def get(self,request, username = None):
-        #TODO: This!!!
-        print('a')
+
+        try:
+            inUser = request.user if username is None else MyUser.objects.get(username=username)
+        except ObjectDoesNotExist:
+            return OutResponse.invalid_arguments()
+
+        serializer = UserHeadingSerializer(inUser)
+        return OutResponse.unit_set(serializer.data)
 
     def put(self, request, username = None):
         if username is not None:
