@@ -66,4 +66,39 @@ class Login(TokenView):
         response.content = content.encode('utf-8')
         return response
 
+class Refresh(TokenView):
+    # TODO : Refactor this and the upper method onto a single one... fuck sake.
+
+    @method_decorator(sensitive_post_parameters('password'))
+    def post(self, request, *args, **kwargs):
+        try:
+            json_str=((request.body).decode('utf-8'))
+            json_obj=json.loads(json_str)
+        except JSONDecodeError:
+            error = OutResponse.invalid_input_params().data
+            return HttpResponse(json.dumps(error), content_type='application/json')
+
+        if not validation_utils.check_args(json_obj,('refresh_token',)):
+            error = OutResponse.missing_input_params().data
+            return HttpResponse(json.dumps(error), content_type='application/json')
+
+        request.POST = { "grant_type" : "refresh_token", "refresh_token" : json_obj["refresh_token"] }
+        response = super(Refresh, self).post(request,args,kwargs)
+        content = response.content.decode('utf-8')
+        content = json.loads(content)
+
+        if response.status_code == 200:
+            content.pop("scope", None)
+            content.pop("expires_in", None)
+            content.pop("token_type", None)
+            content = OutResponse.action_performed(content).data
+
+        if response.status_code == 401:
+            content = 'Invalid Credentials'
+            content = OutResponse.invalid_input_params(content).data
+
+        content = json.dumps(content)
+        response.content = content.encode('utf-8')
+        return response
+
 #TODO : UpdatePassword, ManageSessions etc... here
