@@ -45,7 +45,7 @@ class OutResponse:
 
     @classmethod
     def action_performed(cls, data=None):
-        return OutResponse.output('action_performed',status.HTTP_200_OK,data)
+        return OutResponse.output('action_performed_again',status.HTTP_200_OK,data)
 
     @classmethod
     def empty_set(cls, data=None):
