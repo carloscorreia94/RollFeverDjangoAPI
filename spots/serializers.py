@@ -32,3 +32,11 @@ class SpotNearbySerializer(serializers.ModelSerializer):
     class Meta:
         model = Spot
         fields = ('id','name','created_by','description','lat','lng')
+
+
+class SpotHeadingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Spot
+        fields = ('id','name', 'description', 'main_pic')
+
+        readonly_fields = ('main_pic')

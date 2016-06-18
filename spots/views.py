@@ -9,6 +9,13 @@ from rollfeverapi.common import validation_utils, validation_geo
 from rollfeverapi.common import validation_messages
 from spots.logic import geo_utils
 from django.http import Http404
+from rollfeverapi.common.views import GenericView
+import base64
+import binascii
+from rollfeverapi.common.output_messages import OutResponse
+from rollfeverapi.common.search_utils import spot_search
+
+
 
 # Create your views here.
 
@@ -67,3 +74,22 @@ class SpotsNearby(APIView):
 
         serializer = SpotNearbySerializer(geo_utils.nearby(user_lat,user_lng,user_radius),many=True)
         return Response(serializer.data)
+
+
+class SpotSearch(GenericView):
+
+    def get(self, request, base64string):
+        if base64string is None:
+            #TODO: Get queryParams - do something without search
+            decoded = None
+        else:
+            try:
+                decoded = base64.b64decode(base64string).decode('utf-8')
+            except binascii.Error:
+                return OutResponse.invalid_arguments()
+
+        search_results = spot_search(decoded)
+        if len(search_results) == 0:
+            return OutResponse.empty_set()
+
+        return OutResponse.content_set(search_results)

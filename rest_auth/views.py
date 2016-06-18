@@ -16,7 +16,7 @@ from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from rollfeverapi.common import validation_utils
 import json
-from json import JSONDecodeError
+from simplejson import JSONDecodeError
 
 class SignUp(APIView):
     queryset = MyUser.objects.all()
