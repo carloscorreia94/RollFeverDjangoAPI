@@ -4,6 +4,7 @@ from rollfeverapi.common.output_messages import OutResponse
 from spots.models import Spot
 from spots.serializers import SpotMainPicSerializer
 from django.db.models import ObjectDoesNotExist
+from .models import PendingMedia
 
 
 # Create your views here.
@@ -27,6 +28,7 @@ class UploadMedia(GenericView):
             serializer = SpotMainPicSerializer(actual_spot, data=self.request.data)
             if serializer.is_valid():
                 serializer.save()
+                PendingMedia.update_pending_media(Spot.MEDIA_TYPE, self.content_id, 1)
                 return OutResponse.content_updated()
             return OutResponse.invalid_input_params(serializer.errors)
         except ObjectDoesNotExist:
