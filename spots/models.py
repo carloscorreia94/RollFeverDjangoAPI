@@ -7,6 +7,14 @@ from core_features.models import PendingMedia
 
 # Create your models here.
 
+
+class SpotObjectManager(models.Manager):
+    def get_queryset(self):
+        pending_media_results = PendingMedia.media_to_wait(Spot.MEDIA_TYPE)
+        query = super(SpotObjectManager,self).get_queryset().filter().exclude(id__in=pending_media_results).distinct()
+        return query
+
+
 class Spot(models.Model):
 
     MEDIA_TYPE = "user_created_spot"
@@ -33,13 +41,6 @@ class Spot(models.Model):
         thermo = Thermometer()
         thermo.spot = self
         thermo.save()
-
-
-class SpotObjectManager(models.Manager):
-    def get_queryset(self):
-        pending_media_results = PendingMedia.media_to_wait(Spot.MEDIA_TYPE)
-        query = super(SpotObjectManager,self).get_queryset().filter().exclude(id__in=pending_media_results).distinct()
-        return query
 
 
 class Thermometer(models.Model):
