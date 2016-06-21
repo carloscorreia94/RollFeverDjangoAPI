@@ -37,13 +37,15 @@ class Spot(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.pk is None:
+        create = self.pk is None
+        super(Spot, self).save(*args, **kwargs)
+
+        if create:
             PendingMedia.add_pending_media(1, Spot.MEDIA_TYPE, self.id)
 
             thermo = Thermometer()
             thermo.spot = self
             thermo.save()
-        super(Spot, self).save(*args, **kwargs)
 
 
 class Thermometer(models.Model):
