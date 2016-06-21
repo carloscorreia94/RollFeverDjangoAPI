@@ -20,6 +20,10 @@ class OutResponse:
         return OutResponse.output('invalid_arguments',status.HTTP_400_BAD_REQUEST,data)
 
     @classmethod
+    def content_not_matched(cls, data=None):
+        return OutResponse.output('content_not_matched',status.HTTP_400_BAD_REQUEST,data)
+
+    @classmethod
     def invalid_input_params(cls, data=None):
         return OutResponse.output('invalid_input_params',status.HTTP_400_BAD_REQUEST,data)
 

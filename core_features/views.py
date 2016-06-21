@@ -30,4 +30,4 @@ class UploadMedia(GenericView):
                 return OutResponse.content_updated()
             return OutResponse.invalid_input_params(serializer.errors)
         except ObjectDoesNotExist:
-            return OutResponse.invalid_arguments()
+            return OutResponse.content_not_matched()
