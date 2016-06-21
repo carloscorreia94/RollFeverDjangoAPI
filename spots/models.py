@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Manager
 from rest_framework.validators import UniqueValidator
 from django.core import serializers
 from rollfeverapi.common import upload_utils
@@ -30,6 +31,7 @@ class Spot(models.Model):
     main_pic = models.ImageField(upload_to=upload_utils.PathAndRename('spots/main_pics/'), null=True)
 
     objects = SpotObjectManager()
+    real_objects = Manager()
 
     def __str__(self):
         return self.name
