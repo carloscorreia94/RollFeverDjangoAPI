@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^', include('spots.urls')),
+    url(r'^', include('core_features.urls')),
     url(r'^', include('roll_user.urls')),
     url(r'^', include('roll_sessions.urls')),
     url(r'^', include('rest_auth.urls')),
