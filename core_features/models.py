@@ -16,3 +16,9 @@ class PendingMedia(models.Model):
         pending_media.media_type = media_type
         pending_media.content_id = content_id
         pending_media.save()
+
+
+    @staticmethod
+    def media_to_wait(media_type):
+        #TODO: FILTER OBJECTS WITH PENDING MEDIA MORE THAN 0!!!!
+        return PendingMedia.objects.filter(media_type=media_type).values_list('content_id')
