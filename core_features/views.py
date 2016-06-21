@@ -19,7 +19,7 @@ class UploadMedia(GenericView):
         type_cases = {
             Spot.MEDIA_TYPE: self.handle_spot()
         }
-        return type_cases.get(media_type, OutResponse.invalid_arguments())
+        return type_cases.get(media_type, OutResponse.invalid_arguments("wrong_media_type"))
 
     def handle_spot(self):
         try:
