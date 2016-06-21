@@ -31,7 +31,7 @@ class Spot(models.Model):
     main_pic = models.ImageField(upload_to=upload_utils.PathAndRename('spots/main_pics/'), null=True)
 
     objects = SpotObjectManager()
-    real_objects = Manager()
+    all_objects = Manager()
 
     def __str__(self):
         return self.name

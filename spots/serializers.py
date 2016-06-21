@@ -15,7 +15,7 @@ class SpotMainPicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Spot
-        fields = ('main_pic')
+        fields = ('main_pic',)
 
         readonly_fields = ('main_pic')
 
