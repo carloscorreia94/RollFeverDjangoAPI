@@ -21,9 +21,9 @@ class UploadMedia(GenericView):
         }
         return type_cases.get(media_type, OutResponse.invalid_arguments())
 
-    def handle_spot(self,content_id):
+    def handle_spot(self):
         try:
-            actual_spot = Spot.object.get(id=content_id, created_by=self.request.user.id)
+            actual_spot = Spot.object.get(id=self.content_id, created_by=self.request.user.id)
             serializer = SpotMainPicSerializer(actual_spot, data=self.request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
