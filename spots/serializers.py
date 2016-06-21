@@ -8,7 +8,14 @@ class SpotSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Spot
-        fields = ('id','name', 'description', 'lat', 'lng', 'created_by','main_pic')
+        fields = ('id','name', 'description', 'lat', 'lng', 'created_by')
+
+
+class SpotMainPicSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Spot
+        fields = ('main_pic')
 
         readonly_fields = ('main_pic')
 

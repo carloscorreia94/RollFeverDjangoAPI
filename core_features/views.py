@@ -1,12 +1,33 @@
 from django.shortcuts import render
 from rollfeverapi.common.views import GenericView
 from rollfeverapi.common.output_messages import OutResponse
+from spots.models import Spot
+from spots.serializers import SpotMainPicSerializer
+from django.db.models import ObjectDoesNotExist
 
 
 # Create your views here.
 class UploadMedia(GenericView):
 
+    def __init__(self):
+        self.content_id = None
+        self.request = None
+
     def post(self, request, media_type, content_id):
-        #TODO : Take into account that user can only upload stuff for its own content
-        _status = {"upload" : "media", "media_type" : media_type, "content_id" : content_id}
-        return OutResponse.action_performed(_status)
+        self.content_id = content_id
+        self.request = request
+        type_cases = {
+            Spot.MEDIA_TYPE: self.handle_spot()
+        }
+        return type_cases.get(media_type, OutResponse.invalid_arguments())
+
+    def handle_spot(self,content_id):
+        try:
+            actual_spot = Spot.object.get(id=content_id, created_by=self.request.user.id)
+            serializer = SpotMainPicSerializer(actual_spot, data=self.request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return OutResponse.content_updated()
+            return OutResponse.invalid_input_params(serializer.errors)
+        except ObjectDoesNotExist:
+            return OutResponse.invalid_arguments()

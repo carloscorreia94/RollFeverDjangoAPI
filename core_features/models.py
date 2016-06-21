@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.db.models import ObjectDoesNotExist
 # Create your models here.
 
 
@@ -21,4 +21,15 @@ class PendingMedia(models.Model):
     @staticmethod
     def media_to_wait(media_type):
         return PendingMedia.objects.filter(media_type=media_type, pending_media_number__gt=0).values_list('content_id')
-    
+
+    @staticmethod
+    def update_pending_media(media_type,content_id,media_number):
+        try:
+            pending_media_item = PendingMedia.objects.get(media_type=media_type,content_id=content_id)
+            if pending_media_item.pending_media_number == 1 or pending_media_item.pending_media_number - media_number < 1:
+                pending_media_item.delete()
+            pending_media_item.pending_media_number -= media_number
+            pending_media_item.save()
+            return True
+        except ObjectDoesNotExist:
+            return False
