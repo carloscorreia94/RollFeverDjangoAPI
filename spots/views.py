@@ -33,10 +33,8 @@ class SpotList(APIView):
         serializer = SpotSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(created_by=self.request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        #TODO - Slugs instead of messages in validation
-        return Response(validation_utils.output_error(validation_messages.invalid_input_params,serializer.errors), status=status.HTTP_400_BAD_REQUEST)
-
+            return OutResponse.content_created_pending_media(serializer.data)
+        return OutResponse.invalid_input_params(serializer.errors)
 
 class SpotDetail(APIView):
     permission_classes = [permissions.IsAuthenticated, TokenHasScope]

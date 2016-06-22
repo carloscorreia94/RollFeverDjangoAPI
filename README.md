@@ -4,6 +4,11 @@ Roll Fever API
 
 ## Todo Crucial:
 
+
+* Remove obsolete entries along with pending_media entries with a worker
+* Change multipart to file by file?
+
+-------- OLD SHIT --------
 * Finish Response Details, extra params, SEARCH with no PARAMS
 * CONTINUE TESTS [x]
 * Start Instagram Integration
