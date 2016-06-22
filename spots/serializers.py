@@ -6,7 +6,7 @@ from django.db.models import CharField
 
 class SpotSerializer(serializers.ModelSerializer):
     created_by = serializers.ReadOnlyField(source='created_by.username')
-    name = CharField(max_length=150, unique=True)
+    name = CharField(validators=[UniqueValidator(queryset=Spot.all_objects.all())])
 
     class Meta:
         model = Spot
