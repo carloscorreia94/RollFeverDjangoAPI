@@ -17,11 +17,12 @@ class SpotObjectManager(models.Manager):
 
 
 class Spot(models.Model):
+    #IMPORTANT : FOR EVERY SPOT MIGRATION REMOVE UNIQUENESS CONSTANT ON NAME!
 
     MEDIA_TYPE = "user_created_spot"
 
     created_at = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, unique=True)
     description = models.TextField(blank=True, default='')
     lat = models.DecimalField(max_digits=10, decimal_places=8, null=True)
     lng = models.DecimalField(max_digits=11, decimal_places=8, null=True)
