@@ -6,6 +6,7 @@ from django.db.models import CharField
 
 class SpotSerializer(serializers.ModelSerializer):
     created_by = serializers.ReadOnlyField(source='created_by.username')
+    name = CharField(max_length=150, unique=True)
 
     class Meta:
         model = Spot
@@ -14,7 +15,6 @@ class SpotSerializer(serializers.ModelSerializer):
 
 class SpotMainPicSerializer(serializers.ModelSerializer):
     main_pic = ImageField(required=True)
-    name = CharField(max_length=150, unique=True)
 
     class Meta:
         model = Spot
