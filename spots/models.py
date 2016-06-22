@@ -21,7 +21,7 @@ class Spot(models.Model):
     MEDIA_TYPE = "user_created_spot"
 
     created_at = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=150, unique=True)
+    name = models.CharField(max_length=150)
     description = models.TextField(blank=True, default='')
     lat = models.DecimalField(max_digits=10, decimal_places=8, null=True)
     lng = models.DecimalField(max_digits=11, decimal_places=8, null=True)

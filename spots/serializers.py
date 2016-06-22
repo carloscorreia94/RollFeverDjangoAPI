@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from rest_framework.serializers import ImageField
+from rest_framework.serializers import ImageField, CharField
 from .models import Spot, Thermometer
 from rest_framework.validators import UniqueValidator
 from django.db.models import CharField
@@ -14,6 +14,7 @@ class SpotSerializer(serializers.ModelSerializer):
 
 class SpotMainPicSerializer(serializers.ModelSerializer):
     main_pic = ImageField(required=True)
+    name = CharField(max_length=150, unique=True)
 
     class Meta:
         model = Spot
