@@ -6,6 +6,9 @@ from rollfeverapi.common import upload_utils
 
 
 class Profile(models.Model):
+
+    MEDIA_TYPE = "user_profile_picture"
+
     name = models.CharField(max_length=150)
     home_location = models.CharField(max_length=150,null=True)
     birthday = models.DateField(null=True)

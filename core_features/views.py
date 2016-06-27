@@ -5,6 +5,7 @@ from spots.models import Spot
 from spots.serializers import SpotMainPicSerializer
 from django.db.models import ObjectDoesNotExist
 from .models import PendingMedia
+from rest_auth.models import Profile
 
 
 # Create your views here.
@@ -18,7 +19,8 @@ class UploadMedia(GenericView):
         self.content_id = content_id
         self.request = request
         type_cases = {
-            Spot.MEDIA_TYPE: self.handle_spot()
+            Spot.MEDIA_TYPE: self.handle_spot(),
+           # Profile.MEDIA_TYPE: self.handle_profile_picture()
         }
         return type_cases.get(media_type, OutResponse.invalid_arguments("wrong_media_type"))
 
@@ -33,3 +35,8 @@ class UploadMedia(GenericView):
             return OutResponse.invalid_input_params(serializer.errors)
         except ObjectDoesNotExist:
             return OutResponse.content_not_matched()
+    """
+    def handle_profile_picture(self):
+        try:
+            actual_profile = Profile.objects.get(account=self.request.user.id)
+    """
