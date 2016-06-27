@@ -6,7 +6,7 @@ Roll Fever API
 
 
 * Remove obsolete entries along with pending_media entries with a worker
-* Change multipart to file by file?
+* Create thumbnails of images when uploading content for later download
 
 -------- OLD SHIT --------
 * Finish Response Details, extra params, SEARCH with no PARAMS
