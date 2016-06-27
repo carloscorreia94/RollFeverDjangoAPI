@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import MyUser, Profile
+from rest_framework.serializers import ImageField, CharField
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -31,3 +32,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('name','home_location','birthday','user_photo',)
+
+
+class ProfilePictureSerializer(serializers.ModelSerializer):
+    user_photo = ImageField(required=True)
+
+    class Meta:
+        model = Profile
+        fields = ('user_photo',)
+
+        readonly_fields = ('user_photo',)
