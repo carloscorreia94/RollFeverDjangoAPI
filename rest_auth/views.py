@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import status
 from .models import MyUser
-from rollfeverapi.common.output_messages import OutResponse
+from spotmaniaapi.common.output_messages import OutResponse
 from oauth2_provider.views.base import TokenView
 from rest_framework.parsers import JSONParser
 from django.utils.decorators import method_decorator
@@ -14,7 +14,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from rest_framework.request import Request
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
-from rollfeverapi.common import validation_utils
+from spotmaniaapi.common import validation_utils
 import json
 from simplejson import JSONDecodeError
 

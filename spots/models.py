@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import Manager
 from rest_framework.validators import UniqueValidator
 from django.core import serializers
-from rollfeverapi.common import upload_utils
+from spotmaniaapi.common import upload_utils
 from django.core.validators import MaxValueValidator,MinValueValidator
 from core_features.models import PendingMedia
 

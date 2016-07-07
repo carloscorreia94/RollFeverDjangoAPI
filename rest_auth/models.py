@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils.translation import gettext as _
 from django.utils import timezone
-from rollfeverapi.common import upload_utils
+from spotmaniaapi.common import upload_utils
 
 
 class Profile(models.Model):

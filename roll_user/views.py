@@ -4,19 +4,19 @@ from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasS
 from rest_framework import permissions
 from spots.models import Spot
 from .models import Favorites, FollowerRelation
-from rollfeverapi.common import validation_utils, validation_geo, output_messages
-from rollfeverapi.common import validation_messages
-from rollfeverapi.common.output_messages import OutResponse
+from spotmaniaapi.common import validation_utils, validation_geo, output_messages
+from spotmaniaapi.common import validation_messages
+from spotmaniaapi.common.output_messages import OutResponse
 from rest_framework.response import Response
 from .models import Favorites
 from rest_framework import status
 from rest_auth.models import MyUser
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import api_view
-from rollfeverapi.common.views import GenericView
+from spotmaniaapi.common.views import GenericView
 from rest_auth.serializers import UserProfileSerializer
 from rest_auth.models import Profile
-from rollfeverapi.common.search_utils import user_search
+from spotmaniaapi.common.search_utils import user_search
 import base64
 import binascii
 from .serializers import UserHeadingSerializer

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_auth.models import MyUser, Profile
 from rest_auth.serializers import UserProfileSerializer
-from rollfeverapi import settings
+from spotmaniaapi import settings
 
 class UserHeadingSerializer(serializers.ModelSerializer):
     profile = serializers.SerializerMethodField('profile_heading')

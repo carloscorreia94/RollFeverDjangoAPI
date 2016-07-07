@@ -5,15 +5,15 @@ from rest_framework.response import Response
 from rest_framework import status
 from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
 from rest_framework import permissions
-from rollfeverapi.common import validation_utils, validation_geo
-from rollfeverapi.common import validation_messages
+from spotmaniaapi.common import validation_utils, validation_geo
+from spotmaniaapi.common import validation_messages
 from spots.logic import geo_utils
 from django.http import Http404
-from rollfeverapi.common.views import GenericView
+from spotmaniaapi.common.views import GenericView
 import base64
 import binascii
-from rollfeverapi.common.output_messages import OutResponse
-from rollfeverapi.common.search_utils import spot_search
+from spotmaniaapi.common.output_messages import OutResponse
+from spotmaniaapi.common.search_utils import spot_search
 
 
 
