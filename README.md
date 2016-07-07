@@ -1,6 +1,7 @@
 # SpotMania API
 ==============================
 
+
 ## 07/06/2016 (copied from iOS Readme)
 
 ### What is this?
