@@ -17,3 +17,9 @@ build/
 tests/report/
 spotmaniaapi/settings.py
 spotmaniaapi/wsgi.py
+roll_sessions/migrations/
+rest_auth/migrations/
+roll_user/migrations/
+spots/migrations/
+core_features/migrations/
+.idea/
