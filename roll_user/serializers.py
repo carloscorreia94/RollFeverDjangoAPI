@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from rest_auth.models import MyUser, Profile
+from rest_auth.models import Profile
+from .models import *
 from rest_auth.serializers import UserProfileSerializer
 from spotmaniaapi import settings
 
