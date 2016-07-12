@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_auth.models import MyUser, Profile
-from .models import FollowerRelation
+from roll_user.models import FollowerRelation
 from rest_auth.serializers import UserProfileSerializer
 from spotmaniaapi import settings
 
