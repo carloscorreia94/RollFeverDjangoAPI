@@ -19,7 +19,7 @@ from rest_auth.models import Profile
 from spotmaniaapi.common.search_utils import user_search
 import base64
 import binascii
-from .serializers import UserHeadingSerializer
+from .serializers import UserHeadingSerializer, MainProfileSerializer
 
 
 class Followers(GenericView):
@@ -145,7 +145,7 @@ class UserProfile(GenericView):
         except ObjectDoesNotExist:
             return OutResponse.invalid_arguments()
 
-        serializer = UserHeadingSerializer(inUser)
+        serializer = MainProfileSerializer(inUser)
         return OutResponse.unit_set(serializer.data)
 
     def put(self, request, username = None):
