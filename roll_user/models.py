@@ -1,7 +1,6 @@
 from django.db import models
 from spots.models import Spot
 from rest_auth.models import MyUser
-from .serializers import UserHeadingSerializer
 from spots.serializers import SpotSerializer
 
 """
@@ -78,6 +77,8 @@ class FollowerRelation(models.Model):
 
     @staticmethod
     def get_follows(in_user,following = False):
+        from .serializers import UserHeadingSerializer
+
         if following:
             follows = FollowerRelation.objects.filter(user_created=in_user).values_list('user_following')
         else:
