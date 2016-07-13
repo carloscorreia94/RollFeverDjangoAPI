@@ -30,7 +30,7 @@ def check_webpage():
 
             current_image.website_content_div = str(contents)
             current_image.save()
-            return WebsiteSimpleMonitor.send_email("carloscorreia94@gmail.com")
+            return WebsiteSimpleMonitor.send_email("d105898@mvrht.com")
         return "same bouullsheit"
 
     except ObjectDoesNotExist:
