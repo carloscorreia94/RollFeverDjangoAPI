@@ -41,4 +41,12 @@ class WebsiteSimpleMonitor(models.Model):
 
     @staticmethod
     def send_email(email_address):
-        return "I AMMM gonna send email to this folk's address - %s" % email_address
+        from django.core.mail import send_mail
+        send_mail(
+            'Subject here',
+            'Here is the message.',
+            'spotmania@aeist.pt',
+            [email_address],
+            fail_silently=False,
+        )
+        return "I've just sent email to this folk's address - %s" % email_address
