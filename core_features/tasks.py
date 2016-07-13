@@ -15,9 +15,11 @@ id_or_class = 'class'
 def check_webpage():
 
     r = requests.get(website)
-    soup = BeautifulSoup(r.text)
+    soup = BeautifulSoup(r.text,"html.parser")
     contents = soup.find("div", {id_or_class: element})
 
+    if contents is None:
+        return "Didn't find what you were looking for"
 
     #LETS FIND THE MUTANT DIV IN THE HTML CONTENT STRING
 
