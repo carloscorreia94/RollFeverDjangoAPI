@@ -15,7 +15,7 @@ id_or_class = 'class'
 def check_webpage():
 
     r = requests.get(website)
-    soup = BeautifulSoup.BeautifulSoup(r.text)
+    soup = BeautifulSoup(r.text)
     contents = soup.find("div", {id_or_class: element})
 
 
