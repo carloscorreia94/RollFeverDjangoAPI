@@ -33,3 +33,8 @@ class PendingMedia(models.Model):
             return True
         except ObjectDoesNotExist:
             return False
+
+class WebsiteSimpleMonitor(models.Model):
+    website_url = models.CharField(max_length=300)
+    website_content_div = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
