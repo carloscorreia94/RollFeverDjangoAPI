@@ -41,4 +41,4 @@ class WebsiteSimpleMonitor(models.Model):
 
     @staticmethod
     def send_email(email_address):
-        return "gonna send email to this folk's address - %s" % email_address
+        return "I AMMM gonna send email to this folk's address - %s" % email_address
