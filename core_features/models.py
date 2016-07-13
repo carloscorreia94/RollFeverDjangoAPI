@@ -38,3 +38,7 @@ class WebsiteSimpleMonitor(models.Model):
     website_url = models.CharField(max_length=300)
     website_content_div = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    @staticmethod
+    def send_email(email_address):
+        return "gonna send email to this folk's address - %s" % email_address

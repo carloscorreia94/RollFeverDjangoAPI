@@ -26,14 +26,17 @@ def check_webpage():
     try:
         current_image = WebsiteSimpleMonitor.objects.get(website_url=website)
 
-        if current_image.website_content_div is not contents:
-            return "Site changed!!!!!"
+        if current_image.website_content_div != str(contents):
+
+            current_image.website_content_div = str(contents)
+            current_image.save()
+            return WebsiteSimpleMonitor.send_email("carloscorreia94@gmail.com")
         return "same bouullsheit"
 
     except ObjectDoesNotExist:
         new_image = WebsiteSimpleMonitor()
         new_image.website_url = website
-        new_image.website_content_div = contents
+        new_image.website_content_div = str(contents)
         new_image.save()
 
     param = "um PARAM"
