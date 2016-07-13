@@ -15,7 +15,7 @@ def check_webpage():
     r = requests.get(website)
 
     try:
-        current_image = WebsiteSimpleMonitor.object.get(website_url=website)
+        current_image = WebsiteSimpleMonitor.objects.get(website_url=website)
     except ObjectDoesNotExist:
         new_image = WebsiteSimpleMonitor()
         new_image.website_url = website
