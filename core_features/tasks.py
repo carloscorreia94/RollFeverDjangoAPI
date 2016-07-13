@@ -25,12 +25,8 @@ def check_webpage():
 
     try:
         current_image = WebsiteSimpleMonitor.objects.get(website_url=website)
-        print("DBEEEE::::")
-        print(current_image.website_content_div)
-        print("NO SITE::::")
-        print(contents)
 
-        if current_image.website_content_div != contents:
+        if current_image.website_content_div is not contents:
             return "Site changed!!!!!"
         return "same bouullsheit"
 
