@@ -20,6 +20,7 @@ def check_webpage():
         new_image = WebsiteSimpleMonitor()
         new_image.website_url = website
         new_image.website_content_div = r.text
+        new_image.save()
 
     print(str(r))
 
