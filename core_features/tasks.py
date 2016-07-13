@@ -14,7 +14,7 @@ id_or_class = 'class'
 def check_webpage():
 
     r = requests.get(website)
-    look_for = "<div %s=\"%s\">" & (id_or_class,element)
+    look_for = "<div %s=\"%s\">" % (id_or_class,element)
 
     div_content = r.text.split(look_for)[1]
 
