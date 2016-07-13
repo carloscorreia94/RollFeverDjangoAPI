@@ -25,6 +25,10 @@ def check_webpage():
 
     try:
         current_image = WebsiteSimpleMonitor.objects.get(website_url=website)
+        if current_image.website_content_div != contents:
+            return "Site changed!!!!!"
+        return "same bouullsheit"
+
     except ObjectDoesNotExist:
         new_image = WebsiteSimpleMonitor()
         new_image.website_url = website
