@@ -43,8 +43,8 @@ class WebsiteSimpleMonitor(models.Model):
     def send_email(email_address):
         from django.core.mail import send_mail
         send_mail(
-            'Subject here',
-            'Here is the message.',
+            'SpotMania DJANGO',
+            'BORA _ Registares te',
             'spotmania@aeist.pt',
             [email_address],
             fail_silently=False,
