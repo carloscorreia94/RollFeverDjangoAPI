@@ -172,7 +172,7 @@ class UserSearch(GenericView):
             except binascii.Error:
                 return OutResponse.invalid_arguments()
 
-        search_results = user_search(decoded)
+        search_results = user_search(decoded,request.user.username)
         if len(search_results) == 0:
             return OutResponse.empty_set()
 
