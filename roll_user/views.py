@@ -145,7 +145,7 @@ class UserProfile(GenericView):
         except ObjectDoesNotExist:
             return OutResponse.invalid_arguments()
         a = "a"
-        serializer = MainProfileSerializer(inUser,context={'username': self.request.user.username})
+        serializer = MainProfileSerializer(inUser,context={'username': self.request.user})
         return OutResponse.unit_set(serializer.data)
 
     def put(self, request, username = None):
