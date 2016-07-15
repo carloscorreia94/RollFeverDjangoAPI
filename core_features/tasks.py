@@ -12,7 +12,7 @@ id_or_class = 'class'
 
 @shared_task
 def check_webpage():
-
+    return;
     headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/601.2.7 (KHTML, like Gecko) Version/9.0.1 Safari/601.2.7'}
     r = requests.get(website,headers=headers)
     soup = BeautifulSoup(r.text,"html.parser")
