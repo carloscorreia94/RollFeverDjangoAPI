@@ -20,6 +20,7 @@ class UserHeadingSerializer(serializers.ModelSerializer):
 
 
 class MainProfileSerializer(serializers.ModelSerializer):
+
     profile = serializers.SerializerMethodField('profile_heading')
     numbers = serializers.SerializerMethodField('profile_numbers')
 
@@ -31,7 +32,13 @@ class MainProfileSerializer(serializers.ModelSerializer):
         }
 
     def profile_numbers(self,user):
+        username = self.context.get("username")
+
         user_connections = FollowerRelation.get_follow_status(user)
+
+        if user.username != username:
+            user_connections["status_following"] = "yeah"
+
         return {
             'user_connections' : user_connections
         }
