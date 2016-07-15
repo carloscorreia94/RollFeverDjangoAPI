@@ -32,15 +32,14 @@ class MainProfileSerializer(serializers.ModelSerializer):
         }
 
     def profile_numbers(self,user):
-        username = self.context.get("username")
+        my_username = self.context.get("username")
 
-        user_connections = FollowerRelation.get_follow_status(user)
-
-        if user.username != username:
-            user_connections["status_following"] = "yeah"
-
+        if user.username != my_username:
+            user_connections = FollowerRelation.get_follow_status(user, my_username)
+        else:
+            user_connections = FollowerRelation.get_follow_status(user)
         return {
-            'user_connections' : user_connections
+            'user_connections': user_connections
         }
 
     class Meta:

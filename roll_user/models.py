@@ -2,6 +2,8 @@ from django.db import models
 from spots.models import Spot
 from rest_auth.models import MyUser
 from spots.serializers import SpotSerializer
+from django.core.exceptions import ObjectDoesNotExist
+
 
 """
 DISCLAIMER:
@@ -70,10 +72,19 @@ class FollowerRelation(models.Model):
 
 
     @staticmethod
-    def get_follow_status(in_user):
+    def get_follow_status(in_user,my_user=None):
         follows = len(FollowerRelation.objects.filter(user_created=in_user))
         following = len(FollowerRelation.objects.filter(user_following=in_user))
-        return {"follows": follows, "following": following}
+
+        temp_status = {"follows": follows, "following": following}
+        if my_user is not None:
+            try:
+                FollowerRelation.objects.get(user_created=my_user,user_following=in_user)
+                temp_status["status_following"] = True
+            except ObjectDoesNotExist:
+                temp_status["status_following"] = False
+
+        return temp_status
 
     @staticmethod
     def get_follows(in_user,following = False):
