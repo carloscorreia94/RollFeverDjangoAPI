@@ -58,7 +58,7 @@ class FollowerRelation(models.Model):
         new_relation.user_following = other_user
         new_relation.save()
 
-        return FollowerRelation.get_follow_status(in_user)
+        return FollowerRelation.get_follow_status(other_user)
 
     @staticmethod
     def do_unfollow(in_user,other_user):
@@ -68,7 +68,7 @@ class FollowerRelation(models.Model):
 
         existing_relation.delete()
 
-        return FollowerRelation.get_follow_status(in_user)
+        return FollowerRelation.get_follow_status(other_user)
 
 
     @staticmethod
