@@ -73,8 +73,14 @@ class FollowerRelation(models.Model):
 
     @staticmethod
     def get_follow_status(in_user,my_user=None):
-        follows = len(FollowerRelation.objects.filter(user_created=in_user))
-        following = len(FollowerRelation.objects.filter(user_following=in_user))
+
+        """
+        for sake of clarity...
+        following - whom do I follow (in_user)
+        follows - who does follow me
+        """
+        following = len(FollowerRelation.objects.filter(user_created=in_user))
+        follows = len(FollowerRelation.objects.filter(user_following=in_user))
 
         temp_status = {"follows": follows, "following": following}
         if my_user is not None:
