@@ -81,7 +81,7 @@ class FollowManagement(GenericView):
         if not _status:
             return OutResponse.entry_not_existent()
 
-        return OutResponse.action_performed(_status)
+        return OutResponse.content_deleted(_status)
 
 
 # Create your views here.

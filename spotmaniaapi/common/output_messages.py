@@ -68,5 +68,6 @@ class OutResponse:
         return OutResponse.output('unit_set',status.HTTP_200_OK,data)
 
     @classmethod
-    def content_deleted(cls):
-        return OutResponse.output(None,status.HTTP_204_NO_CONTENT)
+    def content_deleted(cls, data=None):
+        return OutResponse.output('content_deleted',status.HTTP_200_OK,data)
+        #return OutResponse.output(None,status.HTTP_204_NO_CONTENT)
