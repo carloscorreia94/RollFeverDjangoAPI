@@ -30,15 +30,12 @@ def check_webpage():
             current_image.website_content_div = str(contents)
             current_image.save()
             return WebsiteSimpleMonitor.send_email("carloscorreia94@gmail.com")
-        return "same bouullsheit"
+        return "no_need_page_is_the_same"
 
     except ObjectDoesNotExist:
         new_image = WebsiteSimpleMonitor()
         new_image.website_url = website
         new_image.website_content_div = str(contents)
         new_image.save()
-
-    param = "um PARAM"
-    return 'The test task executed with argument "%s" ' % param
 
 
