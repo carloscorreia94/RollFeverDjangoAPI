@@ -4,6 +4,7 @@ from rest_auth.models import MyUser
 from spots.logic import geo_utils
 from rest_framework.test import APITestCase
 from django.core.urlresolvers import reverse
+from core_features.models import PendingMedia
 from rest_framework import status
 from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
@@ -18,7 +19,10 @@ Application = get_application_model()
 class SpotTestCase(TestCase):
     def setUp(self):
         user = MyUser.objects.create(username='test_pilot',email='test@pilot.com')
-        Spot.objects.create(name='Test Spot Berlin',created_by= user,lat=52.48845100,lng=13.37757000)
+        spot = Spot.objects.create(name='Test Spot Berlin',created_by= user,lat=52.48845100,lng=13.37757000)
+
+        PendingMedia.update_pending_media(Spot.MEDIA_TYPE, spot.id, 1)
+
 
     def test_spot_is_nearby(self):
         testLat = 52.488428
