@@ -29,7 +29,7 @@ class SpotTestCase(TestCase):
         testLng = 13.376394
         testRadius = 1000
 
-        my_spot = Spot.objects.get(name='Test Spot Berlin')
+        my_spot = Spot.all_objects.get(name='Test Spot Berlin')
         spots_nearby = geo_utils.nearby(testLat,testLng,testRadius)
 
         self.assertTrue(my_spot in spots_nearby)
