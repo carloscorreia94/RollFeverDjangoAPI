@@ -30,7 +30,7 @@ class Spot(models.Model):
     # TODO : Take care of max size (width,height) here - vs client side
     main_pic = models.ImageField(upload_to=upload_utils.PathAndRename('spots/main_pics/'), null=True)
 
-    #objects = SpotObjectManager()
+    objects = SpotObjectManager()
     all_objects = Manager()
 
     def __str__(self):
