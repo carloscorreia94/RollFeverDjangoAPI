@@ -43,13 +43,13 @@ class Spot(models.Model):
         if create:
             PendingMedia.add_pending_media(1, Spot.MEDIA_TYPE, self.id)
 
-            thermo = Thermometer()
-            thermo.spot = self
-            thermo.save()
+           # thermo = Thermometer()
+           # thermo.spot = self
+           # thermo.save()
 
 
-class Thermometer(models.Model):
-    reputation = models.FloatField(default=0.0,validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
-    flatground = models.FloatField(default=0.0,validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
-    people = models.FloatField(default=0.0,validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
-    spot = models.ForeignKey(Spot,on_delete=models.CASCADE)
+#class Thermometer(models.Model):
+#    reputation = models.FloatField(default=0.0,validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
+#    flatground = models.FloatField(default=0.0,validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
+#    people = models.FloatField(default=0.0,validators=[MinValueValidator(0.0), MaxValueValidator(1.0)])
+#    spot = models.ForeignKey(Spot,on_delete=models.CASCADE)
