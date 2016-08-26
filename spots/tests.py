@@ -26,7 +26,7 @@ class SpotTestCase(TestCase):
 
     def test_spot_is_nearby(self):
         testLat = 52.488428
-        testLng = 13.376394
+        testLng = 11.376394
         testRadius = 1000
 
         my_spot = Spot.all_objects.get(name='Test Spot Berlin')
