@@ -17,7 +17,7 @@ class Session(models.Model):
 
     # TODO: Session can be created by a group, and not only a User. Start working on groups
     created_by = models.ForeignKey('rest_auth.MyUser', on_delete=models.SET_NULL,null=True)
-    #spot = models.ForeignKey(Spot, on_delete=models.CASCADE)
+    spot = models.ForeignKey(Spot, on_delete=models.CASCADE)
 
     def __str__(self):
         # TODO: If title dump, creator, and main media \
